@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Stores demo-flow submissions for product feedback and data annotation:
+// the assessment answers + a summary of the plan generated from them,
+// paired with the user's rating/comments on how well it fit them.
+model Feedback {
+  id                    String   @id @default(cuid())
+  email                 String?
+  rating                Int
+  comments              String?
+  foundPlanHelpful      Boolean?
+  assessmentAnswers     Json
+  generatedPlanSummary  Json?
+  createdAt             DateTime @default(now())
+}

@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: FitMind_Landing_DB
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fitmind_landing
+    ports:
+      - "5433:5432"
+    volumes:
+      - landing_db_data:/var/lib/postgresql/data
+
+volumes:
+  landing_db_data:
