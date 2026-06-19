@@ -35,6 +35,7 @@ import PlanTypeChoiceStep from "@/components/demo/PlanTypeChoiceStep";
 import ResultsStep from "@/components/demo/ResultsStep";
 import FeedbackStep, { ModelEvaluation } from "@/components/demo/FeedbackStep";
 import ComparisonStep, { ModelDraft } from "@/components/demo/ComparisonStep";
+import { useLang } from "@/lib/lang-context";
 
 type Phase =
   | "profile"
@@ -106,6 +107,7 @@ function resumePhase(saved: Record<string, unknown> | null): Phase {
 }
 
 export default function DemoPage() {
+  const { lang } = useLang();
   const [restored] = useState(() => loadSession());
   const [phase, setPhase] = useState<Phase>(() => resumePhase(restored));
 
@@ -248,10 +250,10 @@ export default function DemoPage() {
       BENCHMARK_MODELS.map(async (model) => {
         const [workoutDraft, nutritionDraft] = await Promise.all([
           prefs.wantsWorkout
-            ? generateWorkout(token, buildWorkoutGenerationPayload(prefs, model.id, true))
+            ? generateWorkout(token, buildWorkoutGenerationPayload(prefs, model.id, true, lang))
             : null,
           prefs.wantsNutrition
-            ? generateNutrition(token, buildNutritionGenerationPayload(prefs, model.id, true))
+            ? generateNutrition(token, buildNutritionGenerationPayload(prefs, model.id, true, lang))
             : null,
         ]);
         return { workoutDraft, nutritionDraft };

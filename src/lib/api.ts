@@ -139,6 +139,7 @@ export function buildWorkoutGenerationPayload(
   prefs: PlanPreferences,
   modelOverride?: string,
   skipJudge?: boolean,
+  lang?: string,
 ) {
   return {
     duration_weeks: prefs.durationWeeks,
@@ -152,6 +153,7 @@ export function buildWorkoutGenerationPayload(
     },
     ...(modelOverride ? { model_override: modelOverride } : {}),
     ...(skipJudge ? { skip_judge: true } : {}),
+    ...(lang ? { lang } : {}),
   };
 }
 
@@ -159,6 +161,7 @@ export function buildNutritionGenerationPayload(
   prefs: PlanPreferences,
   modelOverride?: string,
   skipJudge?: boolean,
+  lang?: string,
 ) {
   return {
     duration_weeks: prefs.durationWeeks,
@@ -173,6 +176,7 @@ export function buildNutritionGenerationPayload(
     },
     ...(modelOverride ? { model_override: modelOverride } : {}),
     ...(skipJudge ? { skip_judge: true } : {}),
+    ...(lang ? { lang } : {}),
   };
 }
 
