@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
-import { LangProvider } from "@/lib/lang-context";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ClientShell from "@/components/ClientShell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,12 +35,9 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-background text-foreground"
         suppressHydrationWarning
       >
-        <LangProvider>
-          <div className="fixed top-4 right-4 z-50">
-            <LanguageSwitcher />
-          </div>
+        <ClientShell>
           {children}
-        </LangProvider>
+        </ClientShell>
       </body>
     </html>
   );

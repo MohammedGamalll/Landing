@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import type { WorkoutDraftResponse, NutritionDraftResponse } from "@/lib/api";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export interface ModelDraft {
   label: string;
@@ -125,22 +127,22 @@ export default function ComparisonStep({
   drafts: ModelDraft[];
   onSelect: (index: number) => void;
 }) {
+  const { lang } = useLang();
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto max-w-[90rem]">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="font-display text-center text-2xl font-extrabold">
-            Pick the plan you like best
+          <h1 className="font-display text-center text-xl sm:text-2xl font-extrabold">
+            {ts(lang, "compTitle")}
           </h1>
           <p className="mx-auto mt-2 max-w-md text-center text-sm text-muted">
-            Three AI models generated a plan for you. Compare them and choose your favorite.
-            This helps us find the best model for everyone.
+            {ts(lang, "compSub")}
           </p>
         </motion.div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {drafts.map((draft, i) => (
             <motion.button
               key={i}
@@ -169,7 +171,7 @@ export default function ComparisonStep({
               </div>
 
               {draft.error ? (
-                <p className="text-sm text-red-400">Generation failed: {draft.error}</p>
+                <p className="text-sm text-red-400">{ts(lang, "compFailed")} {draft.error}</p>
               ) : (
                 <div className="space-y-5 overflow-y-auto max-h-[75vh] pr-1">
                   {draft.workoutDraft && <WorkoutDraftPreview draft={draft.workoutDraft} />}
@@ -190,7 +192,7 @@ export default function ComparisonStep({
               onClick={() => onSelect(selected)}
               className="flex items-center gap-2 rounded-full bg-brand px-8 py-3.5 font-semibold text-background shadow-lg transition-transform hover:scale-[1.02]"
             >
-              Use {drafts[selected].label} plan
+              {ts(lang, "compUse")} {drafts[selected].label} {ts(lang, "compPlan")}
               <ArrowRight size={16} />
             </button>
           </motion.div>

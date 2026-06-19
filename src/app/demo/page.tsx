@@ -36,6 +36,7 @@ import ResultsStep from "@/components/demo/ResultsStep";
 import FeedbackStep, { ModelEvaluation } from "@/components/demo/FeedbackStep";
 import ComparisonStep, { ModelDraft } from "@/components/demo/ComparisonStep";
 import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 type Phase =
   | "profile"
@@ -511,7 +512,7 @@ export default function DemoPage() {
         stepKey="planType"
         stepNumber={1}
         totalSteps={PLAN_TOTAL_STEPS}
-        title="What would you like generated?"
+        title={ts(lang, "planTypeTitle")}
         footer={<ContinueButton onClick={handlePlanTypeContinue} disabled={!planTypeChoice} />}
       >
         <PlanTypeChoiceStep value={planTypeChoice} onChange={setPlanTypeChoice} />

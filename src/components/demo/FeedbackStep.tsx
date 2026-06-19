@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Star, Check } from "lucide-react";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export interface ModelEvaluation {
   chosenModelId: string;
@@ -29,6 +31,7 @@ export default function FeedbackStep({
   submitted: boolean;
   modelEval?: ModelEvaluation;
 }) {
+  const { lang } = useLang();
   const [rating, setRating] = useState(0);
   const [helpful, setHelpful] = useState<boolean | null>(null);
   const [comments, setComments] = useState("");
@@ -42,19 +45,17 @@ export default function FeedbackStep({
         <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-background">
           <Check size={26} />
         </span>
-        <h1 className="font-display text-2xl font-extrabold">Thank you!</h1>
-        <p className="max-w-sm text-sm text-muted">
-          Your feedback helps us pick the best AI model and make FitMind&apos;s plans more
-          accurate for everyone.
-        </p>
+        <h1 className="font-display text-2xl font-extrabold">{ts(lang, "fbThanks")}</h1>
+        <p className="max-w-sm text-sm text-muted">{ts(lang, "fbThanksSub")}</p>
         {modelEval && (
           <p className="mt-2 text-xs text-muted">
-            You picked <span className="font-semibold text-brand">{modelEval.chosenModelLabel}</span>.
-            We&apos;ll reveal which model won overall once we have enough votes!
+            {ts(lang, "fbPicked")}{" "}
+            <span className="font-semibold text-brand">{modelEval.chosenModelLabel}</span>.{" "}
+            {ts(lang, "fbReveal")}
           </p>
         )}
         <Link href="/" className="mt-2 text-sm font-semibold text-brand hover:underline">
-          Back to home
+          {ts(lang, "fbHome")}
         </Link>
       </div>
     );
@@ -63,15 +64,12 @@ export default function FeedbackStep({
   const isValid = rating > 0 && (modelEval ? clarity > 0 && personalization > 0 : true);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background px-6 py-12">
+    <div className="flex min-h-screen flex-col bg-background px-4 sm:px-6 py-12">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
-        <h1 className="font-display text-2xl font-extrabold">Rate your plan</h1>
-        <p className="mt-2 text-sm text-muted">
-          Be honest — this directly shapes which AI model powers FitMind.
-        </p>
+        <h1 className="font-display text-xl sm:text-2xl font-extrabold">{ts(lang, "fbTitle")}</h1>
+        <p className="mt-2 text-sm text-muted">{ts(lang, "fbSub")}</p>
 
-        {/* Overall rating */}
-        <p className="mt-8 text-sm font-semibold">Overall quality</p>
+        <p className="mt-8 text-sm font-semibold">{ts(lang, "fbOverall")}</p>
         <div className="mt-2 flex justify-center gap-2">
           {[1, 2, 3, 4, 5].map((n) => (
             <button key={n} onClick={() => setRating(n)} aria-label={`${n} stars`}>
@@ -80,12 +78,9 @@ export default function FeedbackStep({
           ))}
         </div>
 
-        {/* Model-specific evaluation questions */}
         {modelEval && (
           <>
-            <p className="mt-8 text-sm font-semibold">
-              How clear and readable was the plan?
-            </p>
+            <p className="mt-8 text-sm font-semibold">{ts(lang, "fbClarity")}</p>
             <div className="mt-2 flex justify-center gap-2">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
@@ -102,9 +97,7 @@ export default function FeedbackStep({
               ))}
             </div>
 
-            <p className="mt-6 text-sm font-semibold">
-              How personalized did it feel to your profile?
-            </p>
+            <p className="mt-6 text-sm font-semibold">{ts(lang, "fbPersonalization")}</p>
             <div className="mt-2 flex justify-center gap-2">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
@@ -121,11 +114,11 @@ export default function FeedbackStep({
               ))}
             </div>
 
-            <p className="mt-6 text-sm font-semibold">Would you actually follow this plan?</p>
+            <p className="mt-6 text-sm font-semibold">{ts(lang, "fbWouldFollow")}</p>
             <div className="mt-2 flex gap-3">
               {[
-                { label: "Yes", value: true },
-                { label: "Not really", value: false },
+                { label: ts(lang, "fbYes"), value: true },
+                { label: ts(lang, "fbNo"), value: false },
               ].map((opt) => (
                 <button
                   key={opt.label}
@@ -143,11 +136,11 @@ export default function FeedbackStep({
           </>
         )}
 
-        <p className="mt-8 text-sm font-semibold">Did this feel personalized to you?</p>
+        <p className="mt-8 text-sm font-semibold">{ts(lang, "fbPersonalized")}</p>
         <div className="mt-3 flex gap-3">
           {[
-            { label: "Yes", value: true },
-            { label: "Not really", value: false },
+            { label: ts(lang, "fbYes"), value: true },
+            { label: ts(lang, "fbNo"), value: false },
           ].map((opt) => (
             <button
               key={opt.label}
@@ -163,12 +156,12 @@ export default function FeedbackStep({
           ))}
         </div>
 
-        <p className="mt-8 text-sm font-semibold">Anything else? (optional)</p>
+        <p className="mt-8 text-sm font-semibold">{ts(lang, "fbAnything")}</p>
         <textarea
           value={comments}
           onChange={(e) => setComments(e.target.value)}
           rows={3}
-          placeholder="What felt off, or what you loved..."
+          placeholder={ts(lang, "fbPlaceholder")}
           className="mt-3 rounded-xl border border-border bg-surface p-4 text-sm outline-none focus:border-brand/60"
         />
 
@@ -187,7 +180,7 @@ export default function FeedbackStep({
           disabled={!isValid || submitting}
           className="mt-10 rounded-full bg-brand py-4 font-semibold text-background disabled:opacity-40"
         >
-          {submitting ? "Sending..." : "Submit feedback"}
+          {submitting ? ts(lang, "fbSending") : ts(lang, "fbSubmit")}
         </motion.button>
       </div>
     </div>

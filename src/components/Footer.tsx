@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { AtSign, MessageCircle, Globe } from "lucide-react";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function Footer() {
+  const { lang } = useLang();
+
   return (
-    <footer className="relative mt-10 border-t border-border px-6 py-12">
+    <footer className="relative mt-10 border-t border-border px-4 sm:px-6 py-10 sm:py-12">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
         <Link href="/" className="flex items-center gap-2 font-display font-bold">
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand">
@@ -13,8 +19,8 @@ export default function Footer() {
           FitMind
         </Link>
 
-        <p className="text-sm text-muted">
-          © {new Date().getFullYear()} FitMind. Built with care, coached by AI.
+        <p className="text-xs sm:text-sm text-muted text-center">
+          © {new Date().getFullYear()} FitMind. {ts(lang, "footerTagline")}
         </p>
 
         <div className="flex items-center gap-4 text-muted">

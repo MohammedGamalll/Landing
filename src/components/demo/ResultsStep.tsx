@@ -5,6 +5,8 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import type { FullNutritionPlan as FullNutritionPlanType, FullWorkoutPlan as FullWorkoutPlanType } from "@/lib/api";
 import FullNutritionPlan from "./FullNutritionPlan";
 import FullWorkoutPlan from "./FullWorkoutPlan";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function ResultsStep({
   workout,
@@ -15,18 +17,21 @@ export default function ResultsStep({
   nutrition: FullNutritionPlanType | null;
   onContinue: () => void;
 }) {
+  const { lang } = useLang();
+
   return (
-    <div className="min-h-screen bg-background px-6 py-12">
+    <div className="min-h-screen bg-background px-4 sm:px-6 py-12">
       <div className="mx-auto flex max-w-2xl flex-col gap-6">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <p className="flex items-center gap-2 text-sm text-brand">
             <CheckCircle2 size={16} />
-            Saved to your FitMind account
+            {ts(lang, "resultsSaved")}
           </p>
-          <h1 className="font-display mt-1 text-2xl font-extrabold">Your real plan, in full 🎉</h1>
+          <h1 className="font-display mt-1 text-xl sm:text-2xl font-extrabold">
+            {ts(lang, "resultsTitle")} 🎉
+          </h1>
           <p className="mt-2 text-sm text-muted">
-            Take a real look before you rate it — every day, meal, and exercise below
-            is exactly what was generated and saved to your account.
+            {ts(lang, "resultsSub")}
           </p>
         </motion.div>
 
@@ -49,7 +54,7 @@ export default function ResultsStep({
           onClick={onContinue}
           className="flex items-center justify-center gap-2 rounded-full bg-brand py-3.5 font-semibold text-background transition-transform hover:scale-[1.02]"
         >
-          One quick question
+          {ts(lang, "resultsNext")}
           <ArrowRight size={16} />
         </motion.button>
       </div>

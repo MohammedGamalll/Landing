@@ -1,64 +1,46 @@
+"use client";
+
 import { Camera, Mic, Bot, CalendarRange, Activity, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
+import { useLang } from "@/lib/lang-context";
+import { ts, TranslationKey } from "@/lib/translations";
 
-const features = [
-  {
-    icon: Camera,
-    title: "Meal Scanner",
-    description:
-      "Snap a photo of any meal and get an instant calorie, macro, and ingredient breakdown.",
-  },
-  {
-    icon: Mic,
-    title: "Voice Tracker",
-    description:
-      "Just say what you ate or which exercises you did — it's matched and logged automatically.",
-  },
-  {
-    icon: Bot,
-    title: "Virtual AI Coach",
-    description: "Ask questions, get adjustments, and stay accountable with a coach that's always on.",
-  },
-  {
-    icon: CalendarRange,
-    title: "Personalized Plans",
-    description:
-      "Workout and nutrition plans generated from your goals, schedule, and limitations — not a template.",
-  },
-  {
-    icon: Activity,
-    title: "Score & Analytics",
-    description: "Track strength, agility, and endurance over time with a single fitness score.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Safety-Aware",
-    description:
-      "Plans are checked against your injuries and conditions before they ever reach you.",
-  },
+const featureKeys: { icon: typeof Camera; title: TranslationKey; desc: TranslationKey }[] = [
+  { icon: Camera, title: "featMealScanner", desc: "featMealScannerDesc" },
+  { icon: Mic, title: "featVoiceTracker", desc: "featVoiceTrackerDesc" },
+  { icon: Bot, title: "featAiCoach", desc: "featAiCoachDesc" },
+  { icon: CalendarRange, title: "featPlans", desc: "featPlansDesc" },
+  { icon: Activity, title: "featScore", desc: "featScoreDesc" },
+  { icon: ShieldCheck, title: "featSafety", desc: "featSafetyDesc" },
 ];
 
 export default function FeatureGrid() {
+  const { lang } = useLang();
+
   return (
-    <section id="features" className="relative mx-auto max-w-6xl px-6 py-28">
+    <section id="features" className="relative mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
       <Reveal>
-        <h2 className="font-display text-center text-3xl font-extrabold sm:text-4xl">
-          Everything your coach would do.
-          <span className="text-gradient-brand"> Without the wait.</span>
+        <h2 className="font-display text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold">
+          {ts(lang, "featuresTitle")}
+          <span className="text-gradient-brand">{ts(lang, "featuresTitleAccent")}</span>
         </h2>
       </Reveal>
 
-      <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map((f, i) => {
+      <div className="mt-10 sm:mt-16 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {featureKeys.map((f, i) => {
           const Icon = f.icon;
           return (
             <Reveal key={f.title} delay={i * 0.08}>
-              <div className="group h-full rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-brand/50">
+              <div className="group h-full rounded-2xl border border-border bg-surface p-5 sm:p-6 transition-colors hover:border-brand/50">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-background">
                   <Icon size={20} />
                 </div>
-                <h3 className="font-display mt-5 text-lg font-bold">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{f.description}</p>
+                <h3 className="font-display mt-4 sm:mt-5 text-base sm:text-lg font-bold">
+                  {ts(lang, f.title)}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {ts(lang, f.desc)}
+                </p>
               </div>
             </Reveal>
           );

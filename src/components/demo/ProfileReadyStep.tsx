@@ -3,12 +3,16 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { CheckCircle2, Sparkles } from "lucide-react";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function ProfileReadyStep({
   onGeneratePlan,
 }: {
   onGeneratePlan: () => void;
 }) {
+  const { lang } = useLang();
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
       <motion.div
@@ -20,11 +24,10 @@ export default function ProfileReadyStep({
           <CheckCircle2 size={32} />
         </span>
         <h1 className="font-display text-2xl font-extrabold sm:text-3xl">
-          Your FitMind profile is ready!
+          {ts(lang, "profileReadyTitle")}
         </h1>
         <p className="max-w-sm text-sm text-muted">
-          We&apos;ve saved your profile to your account. Want a real, AI-generated
-          workout and nutrition plan based on it right now?
+          {ts(lang, "profileReadySub")}
         </p>
 
         <div className="mt-4 flex w-full max-w-xs flex-col gap-3">
@@ -33,13 +36,13 @@ export default function ProfileReadyStep({
             className="flex items-center justify-center gap-2 rounded-full bg-brand py-4 font-semibold text-background transition-transform hover:scale-[1.02]"
           >
             <Sparkles size={16} />
-            Generate my plan now
+            {ts(lang, "profileReadyCta")}
           </button>
           <Link
             href="/"
-            className="rounded-full border border-border py-3.5 font-semibold text-muted transition-colors hover:border-brand/40 hover:text-foreground"
+            className="rounded-full border border-border py-3.5 text-center font-semibold text-muted transition-colors hover:border-brand/40 hover:text-foreground"
           >
-            Maybe later
+            {ts(lang, "profileReadyLater")}
           </Link>
         </div>
       </motion.div>
