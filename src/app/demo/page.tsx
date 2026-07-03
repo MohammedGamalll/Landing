@@ -37,6 +37,7 @@ import FeedbackStep, { ModelEvaluation } from "@/components/demo/FeedbackStep";
 import ComparisonStep, { ModelDraft } from "@/components/demo/ComparisonStep";
 import { useLang } from "@/lib/lang-context";
 import { ts } from "@/lib/translations";
+import { trStep } from "@/lib/step-translations";
 
 type Phase =
   | "profile"
@@ -559,7 +560,7 @@ export default function DemoPage() {
         stepKey={currentPlanStep.key}
         stepNumber={planIndex + 2}
         totalSteps={PLAN_TOTAL_STEPS}
-        title={currentPlanStep.title}
+        title={trStep(currentPlanStep.title, lang)}
         onBack={planIndex > 0 ? goPlanBack : () => setPhase("planTypeChoice")}
         footer={<ContinueButton onClick={goPlanNext} disabled={!isPlanStepValid()} />}
       >
@@ -588,7 +589,7 @@ export default function DemoPage() {
       stepKey={currentProfileStep.key}
       stepNumber={profileIndex + 2}
       totalSteps={PROFILE_TOTAL_STEPS}
-      title={currentProfileStep.title}
+      title={trStep(currentProfileStep.title, lang)}
       onBack={profileIndex > 0 ? goProfileBack : undefined}
       footer={<ContinueButton onClick={goProfileNext} disabled={!isProfileStepValid()} />}
     >

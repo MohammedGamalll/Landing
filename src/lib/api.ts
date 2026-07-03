@@ -129,10 +129,13 @@ export function getActivePlans(token: string) {
   return request<ActivePlansResponse>("/plans/active", { token });
 }
 
+// All three verified working via OpenRouter (same AI_API_KEY the backend
+// already uses) — the previous Model C (a dated Gemini preview snapshot)
+// was deprecated/removed upstream, which is why it always failed to generate.
 export const BENCHMARK_MODELS = [
   { id: "qwen/qwen3-235b-a22b-2507", label: "Model A" },
-  { id: "openai/gpt-4.1-mini", label: "Model B" },
-  { id: "google/gemini-2.5-flash-preview-05-20", label: "Model C" },
+  { id: "deepseek/deepseek-chat", label: "Model B" },
+  { id: "openai/gpt-4o-mini", label: "Model C" },
 ] as const;
 
 export function buildWorkoutGenerationPayload(

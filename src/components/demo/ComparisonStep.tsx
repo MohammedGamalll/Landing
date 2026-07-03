@@ -18,6 +18,7 @@ export interface ModelDraft {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 function WorkoutDraftPreview({ draft }: { draft: WorkoutDraftResponse }) {
+  const { lang } = useLang();
   const plan = draft.draft_plan;
   return (
     <div className="space-y-3">
@@ -25,7 +26,7 @@ function WorkoutDraftPreview({ draft }: { draft: WorkoutDraftResponse }) {
       {plan.description && <p className="text-sm text-muted">{plan.description}</p>}
       {plan.frequency && (
         <p className="text-xs text-muted">
-          <span className="font-medium">Frequency:</span> {plan.frequency}
+          <span className="font-medium">{ts(lang, "compFrequency")}</span> {plan.frequency}
         </p>
       )}
       <div className="space-y-3">
@@ -46,7 +47,7 @@ function WorkoutDraftPreview({ draft }: { draft: WorkoutDraftResponse }) {
                     <span className="font-medium text-foreground">{ex.exercise_name}</span>
                     {ex.sets && ex.reps ? ` — ${ex.sets}x${ex.reps}` : ""}
                     {ex.duration_seconds ? ` — ${ex.duration_seconds}s` : ""}
-                    {ex.rest_seconds ? ` (rest ${ex.rest_seconds}s)` : ""}
+                    {ex.rest_seconds ? ` (${ts(lang, "exRest").toLowerCase()} ${ex.rest_seconds}s)` : ""}
                     {ex.instructions && (
                       <span className="block mt-0.5 text-muted">{ex.instructions}</span>
                     )}
@@ -62,6 +63,7 @@ function WorkoutDraftPreview({ draft }: { draft: WorkoutDraftResponse }) {
 }
 
 function NutritionDraftPreview({ draft }: { draft: NutritionDraftResponse }) {
+  const { lang } = useLang();
   const plan = draft.draft_plan;
   return (
     <div className="space-y-3">
@@ -74,15 +76,15 @@ function NutritionDraftPreview({ draft }: { draft: NutritionDraftResponse }) {
         </div>
         <div className="rounded-lg bg-surface/50 p-2">
           <span className="block text-base font-bold">{Math.round(plan.daily_protein_g)}g</span>
-          protein
+          {ts(lang, "statProtein").toLowerCase()}
         </div>
         <div className="rounded-lg bg-surface/50 p-2">
           <span className="block text-base font-bold">{Math.round(plan.daily_carbs_g)}g</span>
-          carbs
+          {ts(lang, "statCarbs").toLowerCase()}
         </div>
         <div className="rounded-lg bg-surface/50 p-2">
           <span className="block text-base font-bold">{Math.round(plan.daily_fats_g)}g</span>
-          fats
+          {ts(lang, "statFats").toLowerCase()}
         </div>
       </div>
       <div className="space-y-3">

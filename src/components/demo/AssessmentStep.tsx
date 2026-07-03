@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Minus, Plus, Check, X } from "lucide-react";
 import type { Step, CardOption } from "./steps";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
+import { trStep } from "@/lib/step-translations";
 
 export function CardOptions({
   options,
@@ -14,6 +17,7 @@ export function CardOptions({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const { lang } = useLang();
   return (
     <div className="flex flex-col gap-3">
       {options.map((opt) => {
@@ -30,7 +34,7 @@ export function CardOptions({
           >
             <span className="flex items-center gap-3 font-medium">
               <span className="text-xl">{opt.emoji}</span>
-              {opt.label}
+              {trStep(opt.label, lang)}
             </span>
             <span
               className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${
@@ -55,6 +59,7 @@ export function CardGrid({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const { lang } = useLang();
   return (
     <div className="grid grid-cols-3 gap-3">
       {options.map((opt) => {
@@ -70,7 +75,7 @@ export function CardGrid({
             }`}
           >
             <span className="text-2xl">{opt.emoji}</span>
-            <span className="text-xs font-medium">{opt.label}</span>
+            <span className="text-xs font-medium">{trStep(opt.label, lang)}</span>
           </button>
         );
       })}
@@ -93,6 +98,7 @@ function NumberStepper({
   unit: string;
   onChange: (v: number) => void;
 }) {
+  const { lang } = useLang();
   return (
     <div className="flex flex-col items-center gap-8">
       <p className="font-display text-6xl font-extrabold">
@@ -101,7 +107,7 @@ function NumberStepper({
       </p>
       <div className="flex items-center gap-6">
         <button
-          aria-label="Decrease"
+          aria-label={ts(lang, "ariaDecrease")}
           onClick={() => onChange(Math.max(min, value - step))}
           className="flex h-12 w-12 items-center justify-center rounded-full bg-surface hover:bg-surface-2"
         >
@@ -117,7 +123,7 @@ function NumberStepper({
           className="w-40 accent-[#ff6a1a]"
         />
         <button
-          aria-label="Increase"
+          aria-label={ts(lang, "ariaIncrease")}
           onClick={() => onChange(Math.min(max, value + step))}
           className="flex h-12 w-12 items-center justify-center rounded-full bg-brand text-background hover:bg-brand-light"
         >
@@ -129,10 +135,11 @@ function NumberStepper({
 }
 
 function FitnessSlider({ value, labels, onChange }: { value: number; labels: string[]; onChange: (v: number) => void }) {
+  const { lang } = useLang();
   return (
     <div className="flex flex-col items-center gap-10">
       <p className="font-display text-6xl font-extrabold text-brand">{value}</p>
-      <p className="font-display text-lg font-bold">{labels[value - 1]}</p>
+      <p className="font-display text-lg font-bold">{trStep(labels[value - 1], lang)}</p>
       <input
         type="range"
         min={1}
@@ -142,8 +149,8 @@ function FitnessSlider({ value, labels, onChange }: { value: number; labels: str
         className="w-full accent-[#ff6a1a]"
       />
       <div className="flex w-full justify-between text-xs text-muted">
-        <span>Beginner</span>
-        <span>Elite</span>
+        <span>{trStep(labels[0], lang)}</span>
+        <span>{trStep(labels[labels.length - 1], lang)}</span>
       </div>
     </div>
   );
@@ -158,6 +165,7 @@ function ChipMultiSelect({
   value: string[];
   onChange: (v: string[]) => void;
 }) {
+  const { lang } = useLang();
   const [custom, setCustom] = useState("");
 
   function toggle(tag: string) {
@@ -185,7 +193,7 @@ function ChipMultiSelect({
                   : "border-border bg-surface hover:border-brand/40"
               }`}
             >
-              {tag}
+              {trStep(tag, lang)}
             </button>
           );
         })}
@@ -196,14 +204,14 @@ function ChipMultiSelect({
           value={custom}
           onChange={(e) => setCustom(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addCustom()}
-          placeholder="Add your own…"
+          placeholder={ts(lang, "stepAddPlaceholder")}
           className="flex-1 rounded-xl border border-border bg-surface px-4 py-3 text-sm outline-none focus:border-brand/60"
         />
         <button
           onClick={addCustom}
           className="rounded-xl border border-border px-4 text-sm font-medium hover:border-brand/40"
         >
-          Add
+          {ts(lang, "stepAddButton")}
         </button>
       </div>
 
@@ -217,7 +225,7 @@ function ChipMultiSelect({
                 className="flex items-center gap-1 rounded-full bg-brand/15 px-3 py-1.5 text-sm text-brand"
               >
                 {tag}
-                <button onClick={() => toggle(tag)} aria-label={`Remove ${tag}`}>
+                <button onClick={() => toggle(tag)} aria-label={`${ts(lang, "ariaRemove")} ${tag}`}>
                   <X size={12} />
                 </button>
               </span>
@@ -226,7 +234,7 @@ function ChipMultiSelect({
       )}
 
       <button onClick={() => onChange([])} className="self-start text-xs text-muted hover:text-foreground">
-        None of these apply
+        {ts(lang, "stepNoneApply")}
       </button>
     </div>
   );
@@ -243,6 +251,7 @@ export default function AssessmentStep({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (v: any) => void;
 }) {
+  const { lang } = useLang();
   switch (step.kind) {
     case "cards":
       return step.options.length > 5 ? (
@@ -268,7 +277,7 @@ export default function AssessmentStep({
     default:
       return (
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-muted">
-          Unsupported step.
+          {ts(lang, "stepUnsupported")}
         </motion.p>
       );
   }

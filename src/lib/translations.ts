@@ -92,8 +92,48 @@ const translations = {
     profileReadyCta: "Generate my plan now",
     profileReadyLater: "Maybe later",
 
+    // Demo — Common
+    commonContinue: "Continue",
+    commonLoading: "Loading…",
+
+    // Demo — Verify email
+    verifyTitle: "Check your email",
+    verifyEmailPrefix: "We sent a verification link to",
+    verifyEmailSuffix: "Click it, then come back here to continue.",
+    verifyContinue: "I've verified — continue",
+    verifyResend: "Resend verification email",
+    verifySending: "Sending…",
+
     // Demo — Plan Type Choice
     planTypeTitle: "What would you like generated?",
+
+    // Demo — Assessment step chrome
+    stepAddPlaceholder: "Add your own…",
+    stepAddButton: "Add",
+    stepNoneApply: "None of these apply",
+    stepUnsupported: "Unsupported step.",
+    ariaBack: "Back",
+    ariaDecrease: "Decrease",
+    ariaIncrease: "Increase",
+    ariaRemove: "Remove",
+
+    // Demo — Full plan display (results/comparison previews)
+    planNutritionLabel: "Nutrition plan",
+    planWorkoutLabel: "Workout plan",
+    statDailyCalories: "Daily calories",
+    statProtein: "Protein",
+    statCarbs: "Carbs",
+    statFats: "Fats",
+    statFrequency: "Frequency",
+    statDifficulty: "Difficulty",
+    statPerSession: "Per session",
+    statTrainingDays: "Training days",
+    dayLabel: "Day",
+    mealPrep: "Prep",
+    mealCook: "Cook",
+    exSets: "sets",
+    exReps: "reps",
+    exRest: "Rest",
 
     // Demo — Comparison
     compTitle: "Pick the plan you like best",
@@ -101,6 +141,7 @@ const translations = {
     compUse: "Use",
     compPlan: "plan",
     compFailed: "Generation failed:",
+    compFrequency: "Frequency:",
 
     // Demo — Results
     resultsSaved: "Saved to your FitMind account",
@@ -222,8 +263,48 @@ const translations = {
     profileReadyCta: "ولّد خطتي دلوقتي",
     profileReadyLater: "بعدين",
 
+    // Demo — Common
+    commonContinue: "التالي",
+    commonLoading: "بيحمّل…",
+
+    // Demo — Verify email
+    verifyTitle: "تحقق من بريدك الإلكتروني",
+    verifyEmailPrefix: "بعتنالك رابط تأكيد على",
+    verifyEmailSuffix: "دوس عليه وارجع هنا تكمل.",
+    verifyContinue: "أكدت — كمّل",
+    verifyResend: "أعد إرسال رابط التحقق",
+    verifySending: "بيتبعت…",
+
     // Demo — Plan Type Choice
     planTypeTitle: "عايز إيه يتولّد؟",
+
+    // Demo — Assessment step chrome
+    stepAddPlaceholder: "ضيف حاجة...",
+    stepAddButton: "ضيف",
+    stepNoneApply: "مفيش حاجة من دول",
+    stepUnsupported: "خطوة غير مدعومة.",
+    ariaBack: "رجوع",
+    ariaDecrease: "قلل",
+    ariaIncrease: "زود",
+    ariaRemove: "شيل",
+
+    // Demo — Full plan display (results/comparison previews)
+    planNutritionLabel: "خطة تغذية",
+    planWorkoutLabel: "خطة تمرين",
+    statDailyCalories: "السعرات اليومية",
+    statProtein: "بروتين",
+    statCarbs: "كاربوهيدرات",
+    statFats: "دهون",
+    statFrequency: "التكرار",
+    statDifficulty: "الصعوبة",
+    statPerSession: "لكل حصة",
+    statTrainingDays: "أيام التمرين",
+    dayLabel: "يوم",
+    mealPrep: "تحضير",
+    mealCook: "طبخ",
+    exSets: "مجموعات",
+    exReps: "تكرارات",
+    exRest: "راحة",
 
     // Demo — Comparison
     compTitle: "اختار أحسن خطة",
@@ -231,6 +312,7 @@ const translations = {
     compUse: "استخدم",
     compPlan: "خطة",
     compFailed: "التوليد فشل:",
+    compFrequency: "التكرار:",
 
     // Demo — Results
     resultsSaved: "اتحفظت في حساب FitMind بتاعك",

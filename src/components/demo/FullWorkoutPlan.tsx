@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { ChevronDown, Dumbbell } from "lucide-react";
 import type { FullWorkoutPlan as FullWorkoutPlanType } from "@/lib/api";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function FullWorkoutPlan({ plan }: { plan: FullWorkoutPlanType }) {
+  const { lang } = useLang();
   const [openDay, setOpenDay] = useState<number>(plan.workout_days[0]?.id ?? -1);
 
   return (
@@ -15,20 +18,20 @@ export default function FullWorkoutPlan({ plan }: { plan: FullWorkoutPlanType })
         </span>
         <div>
           <p className="font-display font-bold">{plan.plan_name}</p>
-          <p className="text-xs text-muted">Workout plan</p>
+          <p className="text-xs text-muted">{ts(lang, "planWorkoutLabel")}</p>
         </div>
       </div>
 
       {plan.description && <p className="mt-4 text-sm text-muted">{plan.description}</p>}
 
       <div className="mt-5 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-        <Stat label="Frequency" value={plan.frequency ?? "—"} />
-        <Stat label="Difficulty" value={plan.difficulty_level ?? "—"} />
+        <Stat label={ts(lang, "statFrequency")} value={plan.frequency ?? "—"} />
+        <Stat label={ts(lang, "statDifficulty")} value={plan.difficulty_level ?? "—"} />
         <Stat
-          label="Per session"
+          label={ts(lang, "statPerSession")}
           value={plan.estimated_duration_per_session ? `${plan.estimated_duration_per_session} min` : "—"}
         />
-        <Stat label="Training days" value={`${plan.workout_days.length}`} />
+        <Stat label={ts(lang, "statTrainingDays")} value={`${plan.workout_days.length}`} />
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
@@ -41,7 +44,7 @@ export default function FullWorkoutPlan({ plan }: { plan: FullWorkoutPlanType })
                 className="flex w-full items-center justify-between bg-surface-2 px-4 py-3 text-left"
               >
                 <span className="font-display font-semibold">
-                  Day {day.day_number} — {day.day_name}
+                  {ts(lang, "dayLabel")} {day.day_number} — {day.day_name}
                   {day.focus_area ? ` (${day.focus_area})` : ""}
                 </span>
                 <ChevronDown
@@ -63,11 +66,11 @@ export default function FullWorkoutPlan({ plan }: { plan: FullWorkoutPlanType })
                       </div>
 
                       <div className="mt-2 flex flex-wrap gap-4 text-xs text-muted">
-                        {ex.sets != null && <span>{ex.sets} sets</span>}
-                        {ex.reps != null && <span>{ex.reps} reps</span>}
+                        {ex.sets != null && <span>{ex.sets} {ts(lang, "exSets")}</span>}
+                        {ex.reps != null && <span>{ex.reps} {ts(lang, "exReps")}</span>}
                         {ex.weight_kg != null && <span>{ex.weight_kg}kg</span>}
                         {ex.duration_seconds != null && <span>{ex.duration_seconds}s</span>}
-                        {ex.rest_seconds != null && <span>Rest {ex.rest_seconds}s</span>}
+                        {ex.rest_seconds != null && <span>{ts(lang, "exRest")} {ex.rest_seconds}s</span>}
                       </div>
 
                       {ex.central_exercise.instructions && (

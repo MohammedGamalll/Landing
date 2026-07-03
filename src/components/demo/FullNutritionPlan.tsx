@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { ChevronDown, Salad } from "lucide-react";
 import type { FullNutritionPlan as FullNutritionPlanType } from "@/lib/api";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function FullNutritionPlan({ plan }: { plan: FullNutritionPlanType }) {
+  const { lang } = useLang();
   const [openDay, setOpenDay] = useState<number>(plan.days[0]?.id ?? -1);
 
   return (
@@ -15,17 +18,17 @@ export default function FullNutritionPlan({ plan }: { plan: FullNutritionPlanTyp
         </span>
         <div>
           <p className="font-display font-bold">{plan.plan_name}</p>
-          <p className="text-xs text-muted">Nutrition plan</p>
+          <p className="text-xs text-muted">{ts(lang, "planNutritionLabel")}</p>
         </div>
       </div>
 
       {plan.description && <p className="mt-4 text-sm text-muted">{plan.description}</p>}
 
       <div className="mt-5 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-        <Stat label="Daily calories" value={`${Math.round(plan.daily_calories)} kcal`} />
-        <Stat label="Protein" value={`${Math.round(plan.daily_protein_g)}g`} />
-        <Stat label="Carbs" value={`${Math.round(plan.daily_carbs_g)}g`} />
-        <Stat label="Fats" value={`${Math.round(plan.daily_fats_g)}g`} />
+        <Stat label={ts(lang, "statDailyCalories")} value={`${Math.round(plan.daily_calories)} kcal`} />
+        <Stat label={ts(lang, "statProtein")} value={`${Math.round(plan.daily_protein_g)}g`} />
+        <Stat label={ts(lang, "statCarbs")} value={`${Math.round(plan.daily_carbs_g)}g`} />
+        <Stat label={ts(lang, "statFats")} value={`${Math.round(plan.daily_fats_g)}g`} />
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
@@ -38,7 +41,7 @@ export default function FullNutritionPlan({ plan }: { plan: FullNutritionPlanTyp
                 className="flex w-full items-center justify-between bg-surface-2 px-4 py-3 text-left"
               >
                 <span className="font-display font-semibold">
-                  Day {day.day_number} — {day.day_name}
+                  {ts(lang, "dayLabel")} {day.day_number} — {day.day_name}
                 </span>
                 <ChevronDown
                   size={16}
@@ -63,8 +66,12 @@ export default function FullNutritionPlan({ plan }: { plan: FullNutritionPlanTyp
                         <span>P {Math.round(meal.protein_g)}g</span>
                         <span>C {Math.round(meal.carbs_g)}g</span>
                         <span>F {Math.round(meal.fats_g)}g</span>
-                        {meal.prep_time_minutes != null && <span>Prep {meal.prep_time_minutes}m</span>}
-                        {meal.cook_time_minutes != null && <span>Cook {meal.cook_time_minutes}m</span>}
+                        {meal.prep_time_minutes != null && (
+                          <span>{ts(lang, "mealPrep")} {meal.prep_time_minutes}m</span>
+                        )}
+                        {meal.cook_time_minutes != null && (
+                          <span>{ts(lang, "mealCook")} {meal.cook_time_minutes}m</span>
+                        )}
                       </div>
 
                       {meal.ingredients?.length > 0 && (

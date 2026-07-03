@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import { ReactNode } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLang } from "@/lib/lang-context";
+import { ts } from "@/lib/translations";
 
 export default function StepShell({
   stepKey,
@@ -22,6 +24,7 @@ export default function StepShell({
   children: ReactNode;
   footer?: ReactNode;
 }) {
+  const { lang, dir } = useLang();
   return (
     <div className="flex min-h-screen flex-col bg-background px-4 sm:px-6 py-8">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
@@ -29,10 +32,10 @@ export default function StepShell({
           {onBack ? (
             <button
               onClick={onBack}
-              aria-label="Back"
+              aria-label={ts(lang, "ariaBack")}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-foreground transition-colors hover:bg-surface-2"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={18} className={dir === "rtl" ? "rotate-180" : ""} />
             </button>
           ) : (
             <span className="h-9 w-9" />
